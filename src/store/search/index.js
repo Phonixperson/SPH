@@ -17,13 +17,13 @@ const actions = {
 }
 const getters = {
     goodsList(state){
-        return state.searchList.goodsList  || undefined
+        return state.searchList.goodsList ||[]
     },
     trademarkList(state){
-        return  state.searchList.trademarkList
+        return state.searchList.trademarkList || []
     },
-    attrList(state){
-        return state.searchList.attrList
+    attrsList(state){
+        return state.searchList.attrsList || []
     }
 }
 export default{
