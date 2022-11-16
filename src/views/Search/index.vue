@@ -192,6 +192,7 @@ import { mapGetters } from 'vuex'
         this.getDate()
       }
     },
+    // kdoispakjo
     watch:{
       $route(newValue,oldValue){
         Object.assign(this.searchParams,this.$route.query,this.$route.params)
