@@ -141,11 +141,20 @@ import { mapGetters } from 'vuex'
     },
     computed:{
       ...mapGetters(['goodsList','attrsList','trademarkList']),
-      
     },
     methods:{
       getDate(){
         this.$store.dispatch('getSearchInfo',this.searchParams)
+      }
+    },
+    watch:{
+      $route(newValue,oldValue){
+        Object.assign(this.searchParams,this.$route.query,this.$route.params)
+        this.getDate()
+        // 每次请求完毕把参数置空
+        this.searchParams.category1Id = ''
+        this.searchParams.category2Id = ''
+        this.searchParams.category3Id = ''
       }
     }
   }
