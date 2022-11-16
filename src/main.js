@@ -23,5 +23,8 @@ new Vue({
   render: h => h(App),
   // 注册路由
   router,
-  store
+  store,
+  beforeCreate(){
+    Vue.prototype.$bus = this
+  }
 }).$mount('#app')
