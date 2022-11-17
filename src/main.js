@@ -10,12 +10,14 @@ import store from './store'
 import './mock/mockServe'
 import 'swiper/swiper-bundle.min.css'
 import Carousel from '@/components/Carousel'
+import Pagination from '@/components/Pagination'
 
 
 
 
 Vue.component(Carousel.name,Carousel)
 Vue.component(TypeNav.name,TypeNav)
+Vue.component(Pagination.name,Pagination)
 
 Vue.config.productionTip = false
 
