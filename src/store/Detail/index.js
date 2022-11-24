@@ -1,4 +1,5 @@
-import { reqGoodsInfo } from "@/api"
+import { reqAddToCard, reqGoodsInfo } from "@/api"
+import { reject } from "lodash"
 const state ={
     goodsInfo:{}
 }
@@ -13,6 +14,15 @@ const actions ={
         if(result.code == 200){
             commit('GETGOODSINFO',result.data)
         }
+    },
+    async addOrUpdateShopCart({commit},{skuId,skuNum}){
+        let result = await reqAddToCard(skuId,skuNum)
+        // 说明服务器加入购物车成功
+        if(result.code == 200){
+            return "OK"
+        }else{
+            return Promise.reject(new Error('fail')) 
+       }
     }
 }
 const getters ={

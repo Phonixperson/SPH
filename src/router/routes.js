@@ -3,6 +3,7 @@ import Search from '@/views/Search'
 import Login from '@/views/Login' 
 import Register from '@/views/Register' 
 import Detail from '@/views/Detail'
+import AddCartSuccess from '@/views/AddCartSuccess'
 
 export default  [
     {
@@ -41,6 +42,15 @@ export default  [
     {
         path:'/detail/:skuId',
         component:Detail,
+        meta:{
+            show:true
+        },
+        
+    },
+    {   
+        name:'addcartsuccess',
+        path:'/addcartsuccess/:skuNum',
+        component:AddCartSuccess,
         meta:{
             show:true
         },

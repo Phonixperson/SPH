@@ -75,12 +75,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum">
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="minus" >-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -339,7 +339,7 @@ import { mapGetters } from 'vuex'
     name: 'Detail',
     data(){
       return{
-        
+        skuNum:1
       }
     },
     
@@ -362,6 +362,41 @@ import { mapGetters } from 'vuex'
           item.isChecked = 0
         });
         attrValue.isChecked = 1
+      },
+      minus(){
+        if(this.skuNum > 1){
+          this.skuNum--
+        }
+      },
+      changeSkuNum(e){
+        let value = e.target.value
+        if(isNaN(value)){
+          this.skuNum = 1
+        }
+        if(value < 0){
+          this.skuNum = 1
+        }
+        else{
+          this.skuNum = parseInt(value)
+        }
+      },
+      async addShopCart(){
+        // 函数前只要加上了async，就回返回一个promise，要么是个成功的promise，要么失败
+        try{
+          await  this.$store.dispatch('addOrUpdateShopCart',
+          {skuId:this.$route.params.skuId,skuNum:this.skuNum})
+          this.$router.push({
+            name:'addcartsuccess',
+            params:{
+              skuNum:this.skuNum
+            }
+          })
+          sessionStorage.setItem('skuInfo',JSON.stringify(this.skuInfo))
+        }catch{
+          alert(error.message)
+        }
+        
+        
       }
     }
   }
