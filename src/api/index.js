@@ -33,3 +33,7 @@ export const reqShopcartList = () => requests({
     url:'/cart/cartList',
     method:'get'
 })
+export const reqCheckCart = (skuID,isChecked) => requests({
+    url:`/cart/checkCart/${skuID}/${isChecked}`,
+    method:'get'
+})

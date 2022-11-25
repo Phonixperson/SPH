@@ -1,6 +1,6 @@
-import { reqShopcartList } from "@/api"
+import { reqAddToCard, reqCheckCart, reqShopcartList } from "@/api"
 const state = {
-    cartList: []
+    cartList: [] 
 }
 const actions = {
     async getCartList({commit}){
@@ -8,7 +8,11 @@ const actions = {
         if(result.code == 200){
             commit('GETCARTLIST',result.data)
         }
-    }
+    },
+    async changeChecked({commit},goodInfo){
+        let {skuID,isChecked} = goodInfo
+        await reqCheckCart(skuID,isChecked)
+    },
 }
 const mutations = {
     GETCARTLIST(state,data){
@@ -16,7 +20,9 @@ const mutations = {
     }
 }
 const getters = {
-
+    cartList(state){
+        return state.cartList[0] || {}
+    },
 }
 export default{
     state,actions,mutations,getters
