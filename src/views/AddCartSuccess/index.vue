@@ -14,7 +14,7 @@
         </div>
         <div class="right-gocart">
           <a href="javascript:" class="sui-btn btn-xlarge" @click="goDetail">查看商品详情</a>
-          <a href="javascript:" >去购物车结算 > </a>
+          <router-link to="/shopcart" >去购物车结算 > </router-link>
         </div>
       </div>
     </div>
@@ -37,7 +37,8 @@
       goDetail(){
         let skuId = this.skuInfo.id
         this.$router.push(`/detail/${skuId}`)
-      }
+      },
+
     }
     
   }

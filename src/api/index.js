@@ -29,3 +29,7 @@ export const reqAddToCard = (skuId,skuNum) => requests({
     method:'post',
     url:`/cart/addToCart/${skuId}/${skuNum}`
 })
+export const reqShopcartList = () => requests({
+    url:'/cart/cartList',
+    method:'get'
+})

@@ -2,6 +2,7 @@ import axios from "axios";
 import nProgress from "nprogress";
 // 引入nprogress的样式
 import 'nprogress/nprogress.css'
+import store from '@/store'
 const requests = axios.create({
     baseURL:'/api',
     // 超时时间
@@ -10,7 +11,11 @@ const requests = axios.create({
 // 请求拦截器
 requests.interceptors.request.use(
     // config配置对象中有个属性很重要，是请求头
+    
     config=>{
+        if(store.state.Detail.uuid_token){
+            config.headers.userTempId = store.state.Detail.uuid_token
+        }
         nProgress.start()
         return config
     }

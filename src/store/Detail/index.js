@@ -1,7 +1,8 @@
 import { reqAddToCard, reqGoodsInfo } from "@/api"
-import { reject } from "lodash"
+import { getUUID } from '@/utils/uuid-token'
 const state ={
-    goodsInfo:{}
+    goodsInfo:{},
+    uuid_token:getUUID()
 }
 const mutations ={
     GETGOODSINFO(state,data){
