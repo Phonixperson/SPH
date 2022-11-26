@@ -37,7 +37,7 @@
             >
             <input
               autocomplete="off"
-              type="text"
+              type="number"
               :value="good.skuNum"
               minnum="1"
               class="itxt"
@@ -54,7 +54,7 @@
             <span class="sum">{{ good.skuPrice * good.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="#none" class="sindelet" @click="deleteCart(good)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -63,16 +63,25 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="allChecked" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="allChecked"
+          :disabled="!cartInfoList.length"
+          @change="isAllChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="#none" @click="deleteAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">
+          已选择 <span>{{ totalNum }}</span
+          >件商品
+        </div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
           <i class="summoney">{{ totalPrice }}</i>
@@ -87,6 +96,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import throttle from "lodash/throttle";
 
 export default {
   name: "ShopCart",
@@ -100,11 +110,11 @@ export default {
     getData() {
       this.$store.dispatch("getCartList");
     },
-    async changeChecked(isChecked, skuID) {
+    async changeChecked(isChecked, skuId) {
       isChecked = isChecked ? 0 : 1;
       let goodInfo = {
         isChecked,
-        skuID,
+        skuId,
       };
       try {
         await this.$store.dispatch("changeChecked", goodInfo);
@@ -113,20 +123,53 @@ export default {
         return Promise.reject(new Error("fail"));
       }
     },
-    async handler(type, disNum, good) {
+    // 加上节流
+    handler: throttle(async function (type, disNum, good) {
       switch (type) {
         case "minus":
-          disNum =  good.skuNum > 1 ? -1 : 0
-          break
+          disNum = good.skuNum > 1 ? -1 : 0;
+          break;
         case "add":
-          disNum = 1
-          break
+          disNum = 1;
+          break;
+        case "change":
+          disNum = disNum > 0 ? parseInt(disNum) - good.skuNum : 0;
       }
       try {
-        await this.$store.dispatch('addOrUpdateShopCart',{skuId:good.skuId,skuNum:disNum})
+        if (disNum == 0) return;
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: good.skuId,
+          skuNum: disNum,
+        });
+        this.getData();
+      } catch (error) {}
+    }, 1000),
+    async deleteCart(good) {
+      try {
+        await this.$store.dispatch("deleteCart", good.skuId);
+        alert("删除成功");
+        this.getData();
+      } catch (error) {
+        alert(error);
+      }
+    },
+
+    
+    async isAllChecked(e) {
+      try {
+        await this.$store.dispatch('makeAllChanged',e.target.checked)
         this.getData()
       } catch (error) {
-        
+        alert(error)
+      }
+
+    },
+    async deleteAllCheckedCart(){
+      try {
+        await this.$store.dispatch('deleteAllCheckedCart')
+        this.getData()
+      } catch (error) {
+        alert(error)
       }
     }
   },
@@ -146,6 +189,15 @@ export default {
     },
     allChecked() {
       return this.cartInfoList.every((i) => i.isChecked);
+    },
+    totalNum() {
+      let total = 0;
+      this.cartInfoList.forEach((i) => {
+        if (i.isChecked) {
+          total++;
+        }
+      });
+      return total;
     },
   },
 };

@@ -33,7 +33,27 @@ export const reqShopcartList = () => requests({
     url:'/cart/cartList',
     method:'get'
 })
-export const reqCheckCart = (skuID,isChecked) => requests({
-    url:`/cart/checkCart/${skuID}/${isChecked}`,
+export const reqCheckCart = (skuId,isChecked) => requests({
+    url:`/cart/checkCart/${skuId}/${isChecked}`,
     method:'get'
+})
+export const reqDeletaCart = skuId => requests({
+    url:`/cart/deleteCart/${skuId}`,
+    method:'delete'
+})
+export const reqGetCode = (phone) => requests({
+    url:`/user/passport/sendCode/${phone}`,
+    method:'get'
+})
+// 注册的接口
+export const reqRegister = data => requests({
+    url:'/user/passport/register',
+    data,
+    method:'post'
+})
+// 登录
+export const reqLogin = user => requests({
+    url:'/user/passport/login',
+    method:'post',
+    data:user
 })
