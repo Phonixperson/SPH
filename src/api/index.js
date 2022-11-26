@@ -57,3 +57,14 @@ export const reqLogin = user => requests({
     method:'post',
     data:user
 })
+// 获取用户信息
+export const reqGetUserInfo = () => requests({
+    url:'/user/passport/auth/getUserInfo',
+    method:'get'
+})
+// 推出登录
+export const reqLogout = () => requests({
+    url:'/user/passport/logout',
+    method:'get'
+})
+
