@@ -16,6 +16,9 @@ requests.interceptors.request.use(
         if(store.state.Detail.uuid_token){
             config.headers.userTempId = store.state.Detail.uuid_token
         }
+        if(store.state.User.token){
+            config.headers.token = store.state.User.token
+        }
         nProgress.start()
         return config
     }

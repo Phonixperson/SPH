@@ -11,6 +11,10 @@ import './mock/mockServe'
 import 'swiper/swiper-bundle.min.css'
 import Carousel from '@/components/Carousel'
 import Pagination from '@/components/Pagination'
+import * as API from '@/api'
+import {MessageBox} from 'element-ui'
+
+
 
 
 
@@ -21,6 +25,9 @@ Vue.component(Pagination.name,Pagination)
 
 Vue.config.productionTip = false
 
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$confirm = MessageBox.confirm;
+
 new Vue({
   render: h => h(App),
   // 注册路由
@@ -28,5 +35,6 @@ new Vue({
   store,
   beforeCreate(){
     Vue.prototype.$bus = this
+    Vue.prototype.$API = API
   }
 }).$mount('#app')
