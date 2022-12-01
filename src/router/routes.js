@@ -8,6 +8,9 @@ import ShopCart from '@/views/ShopCart'
 import Trade from '@/views/Trade'
 import Pay from '@/views/Pay'
 import PaySuccess from '@/views/PaySuccess'
+import Center from '@/views/Center'
+import MyOrder from '@/views/Center/MyOrder'
+import GroupOrder from '@/views/Center/GroupOrder'
 
 export default  [
     {
@@ -86,5 +89,26 @@ export default  [
         meta:{
             show:true
         },
+    },
+    {   
+        path:'/center',
+        component:Center,
+        meta:{
+            show:true
+        },
+        children:[
+            {
+                path:'myorder',
+                component:MyOrder
+            },
+            {
+                path:'grouporder',
+                component:GroupOrder
+            },
+            {
+                path:'/center',
+                redirect:'/center/myorder'
+            }
+        ]
     }
 ]
