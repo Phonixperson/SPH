@@ -13,10 +13,15 @@ import Carousel from '@/components/Carousel'
 import Pagination from '@/components/Pagination'
 import * as API from '@/api'
 import {MessageBox} from 'element-ui'
+import VueLazyload from 'vue-lazyload'
+import pic from '@/assets/1.jpg'
+import  '@/plugins/validate.js'
 
 
 
-
+Vue.use(VueLazyload,{
+  loading:pic
+})
 
 
 Vue.component(Carousel.name,Carousel)

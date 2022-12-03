@@ -8,29 +8,46 @@
       </h3>
       <div class="content">
         <label>手机号:</label>
-        <input type="text" placeholder="请输入你的手机号" v-model="phone">
-        <span class="error-msg">错误提示信息</span>
+        <input type="text" placeholder="请输入你的手机号" v-model="phone"
+          name="phone"
+          v-validate="{
+            required:true,
+            regex:/^1\d{10}$/
+          }"
+          :class="{invalid:errors.has('phone')}"
+        >
+        <span class="error-msg" >{{errors.first('phone')}}</span>
       </div>
       <div class="content">
         <label>验证码:</label>
-        <input type="text" placeholder="请输入验证码" v-model="code">
+        <input type="text" placeholder="请输入验证码" v-model="code"
+          v-validate="{required:true,regex:/^\d{6}$/}" name="code"
+          :class="{invalid:errors.has('code')}"
+        >
         <button style="height:38px" @click="getCode">点击获取验证码</button>
-        <span class="error-msg">错误提示信息</span>
+        <span class="error-msg">{{errors.first('code')}}</span>
       </div>
       <div class="content">
         <label>登录密码:</label>
-        <input type="text" placeholder="请输入你的登录密码" v-model="password">
-        <span class="error-msg">错误提示信息</span>
+        <input type="password" placeholder="请输入你的登录密码" v-model="password"
+          name="password" v-validate="{required:true,regex:/^[0-9a-zA-Z]{8,20}$/}"
+          :class="{invalid:errors.has('password')}"
+        >
+        <span class="error-msg">{{errors.first('password')}}</span>
       </div>
       <div class="content">
         <label>确认密码:</label>
-        <input type="text" placeholder="请输入确认密码" v-model="againPassword">
-        <span class="error-msg">错误提示信息</span>
+        <input type="password" placeholder="请输入确认密码" v-model="againPassword"
+          name="againPassword" v-validate="{required:true,is:password}" :class="{invalid:errors.has('againPassword')}"
+        >
+        <span class="error-msg">{{errors.first('againPassword')}}</span>
       </div>
       <div class="controls">
-        <input name="m1" type="checkbox" :checked="true">
+        <input name="agree" type="checkbox" :checked="true" v-model="agree"
+          v-validate="{required:true,'tongyi':true}" :class="{invalid:errors.has('agree')}"
+        >
         <span>同意协议并注册《尚品汇用户协议》</span>
-        <span class="error-msg">错误提示信息</span>
+        <span class="error-msg">{{errors.first('agree')}}</span>
       </div>
       <div class="btn">
         <button @click="userRegister">完成注册</button>
@@ -64,7 +81,8 @@
         phone:'',
         code:'',
         password:'',
-        againPassword:''
+        againPassword:'',
+        agree:true
       }
     },
     methods:{
