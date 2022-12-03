@@ -31,7 +31,7 @@
         <h5>商品清单</h5>
         <ul class="list clearFix" v-for="order in detailArrayList" :key="order.id">
           <li>
-            <img :src="order.imgUrl" alt="">
+            <img :src="order.imgUrl" alt=""  style="width:100px;height:100px">
           </li>
           <li>
             <p>

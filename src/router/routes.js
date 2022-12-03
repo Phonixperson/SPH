@@ -72,9 +72,17 @@ export default  [
     {   
         path:'/trade',
         component:Trade,
+        beforeEnter(to,from,next){
+            if(from.path == '/shopcart'){
+                next()
+            }else{
+                next(false)
+            }
+        },
         meta:{
             show:true
         },
+        
     },
     {   
         path:'/pay',
@@ -82,6 +90,13 @@ export default  [
         meta:{
             show:true
         },
+        beforeEnter(to,from,next){
+            if(from.path == '/trade'){
+                next()
+            }else{
+                next(false)
+            }
+        }
     },
     {   
         path:'/paysuccess',
