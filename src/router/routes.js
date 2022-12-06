@@ -15,7 +15,7 @@ import GroupOrder from '@/views/Center/GroupOrder'
 export default  [
     {
         path:'/home',
-        component:Home,
+        component:()=>import('@/views/Home'),
         meta:{
             show:true
         }
@@ -23,18 +23,18 @@ export default  [
     {
         name:'search',
         path:'/search/:keyword?',
-        component:Search,
+        component:()=>import('@/views/Search'),
         meta:{
             show:true
         }
     },
     {
         path:'/login',
-        component:Login
+        component:()=>import('@/views/Login' )
     },
     {
         path:'/register',
-        component:Register,
+        component:()=>import('@/views/Register' ),
         meta:{
             show:false
         }
@@ -48,7 +48,7 @@ export default  [
     },
     {
         path:'/detail/:skuId',
-        component:Detail,
+        component:()=>import('@/views/Detail'),
         meta:{
             show:true
         },
@@ -57,21 +57,21 @@ export default  [
     {   
         name:'addcartsuccess',
         path:'/addcartsuccess/:skuNum',
-        component:AddCartSuccess,
+        component:()=>import('@/views/AddCartSuccess'),
         meta:{
             show:true
         },
     },
     {   
         path:'/shopcart',
-        component:ShopCart,
+        component:()=>import('@/views/ShopCart'),
         meta:{
             show:true
         },
     },
     {   
         path:'/trade',
-        component:Trade,
+        component:()=>import('@/views/Trade'),
         beforeEnter(to,from,next){
             if(from.path == '/shopcart'){
                 next()
@@ -86,7 +86,7 @@ export default  [
     },
     {   
         path:'/pay',
-        component:Pay,
+        component:()=>import('@/views/Pay'),
         meta:{
             show:true
         },
@@ -100,25 +100,25 @@ export default  [
     },
     {   
         path:'/paysuccess',
-        component:PaySuccess,
+        component:()=>import('@/views/PaySuccess'),
         meta:{
             show:true
         },
     },
     {   
         path:'/center',
-        component:Center,
+        component:()=>import('@/views/Center'),
         meta:{
             show:true
         },
         children:[
             {
                 path:'myorder',
-                component:MyOrder
+                component:()=>import('@/views/Center/MyOrder')
             },
             {
                 path:'grouporder',
-                component:GroupOrder
+                component:()=>import('@/views/Center/GroupOrder')
             },
             {
                 path:'/center',
